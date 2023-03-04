@@ -3,10 +3,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface PropertiesState {
   properties: any[];
+  property: any;
 }
 
 const initialState: PropertiesState = {
   properties: [],
+  property: {},
 };
 
 export const getProperties = createAsyncThunk(
@@ -21,12 +23,18 @@ export const getProperties = createAsyncThunk(
 const propertiesSlice = createSlice({
   name: "properties",
   initialState,
-  reducers: {},
+  reducers: {
+    selectProperty: (state, action) => {
+      state.property = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getProperties.fulfilled, (state, action) => {
       state.properties = action.payload;
     });
   },
 });
+
+export const { selectProperty } = propertiesSlice.actions;
 
 export default propertiesSlice.reducer;

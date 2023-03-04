@@ -1,13 +1,44 @@
+import { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
+  Button,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Grid,
   Typography,
 } from "@mui/material";
+import BedIcon from "@mui/icons-material/Bed";
+import WcIcon from "@mui/icons-material/Wc";
 
-const Property = ({ property }: any) => {
+import { selectProperty } from "@/store/properties";
+import { RootState } from "@/store/store";
+
+interface PropertyProps {
+  property: any;
+  activateProperty: (propertyId: string) => void;
+  deactivateProperty: () => void;
+  activeProperty: string;
+}
+
+const Property = ({
+  property,
+  activateProperty,
+  deactivateProperty,
+  activeProperty,
+}: PropertyProps) => {
+  const dispatch = useDispatch();
+
+  const selectedProperty = useSelector(
+    (store: RootState) => store.properties.property
+  );
+
   const cardStyle = {
     boxShadow: "0 1px 2px rgb(0 0 0 / 20%)",
     borderRadius: "12px",
@@ -26,40 +57,123 @@ const Property = ({ property }: any) => {
 
   const price = new Intl.NumberFormat().format(property.price);
 
+  const isActive = property.id === activeProperty;
+
   return (
-    <Grid item key={property.id}>
-      <Card style={cardStyle}>
-        <CardActionArea>
-          <CardMedia
-            style={mediaStyle}
-            image={
-              property.photoUrl ||
-              "https://media.istockphoto.com/id/1130833057/photo/close-up-real-estate-agent-with-house-model-hand-putting-signing-contract-have-a-contract-in.jpg?b=1&s=612x612&w=0&k=20&c=xK6M2L0VmHO0DVpjUuRtHC1pJslGJ7n67kXxl1-frco="
-            }
-            title={property.name}
-          />
-          <CardContent style={contentStyle}>
-            <Typography gutterBottom variant="h5" component="h2">
-              {property.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {`${property.rooms} bedrooms • ${property.bathrooms} bathrooms`}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {`${property.houseNumber} ${property.street}`}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {`${property.suburb}, ${property.zipcode}`}
-            </Typography>
-            <Typography variant="h6" component="p">
-              {`${
-                property.sellStatus === "SALE" ? "On sale for" : ""
-              } $${price} ${property.sellStatus === "RENT" ? "per month" : ""}`}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </Grid>
+    <Fragment>
+      <Grid
+        item
+        key={property.id}
+        onClick={() => {
+          activateProperty(property.id);
+          dispatch(selectProperty(property));
+        }}
+      >
+        <Card style={cardStyle}>
+          <CardActionArea>
+            <CardMedia
+              style={mediaStyle}
+              image={
+                property.photoUrl ||
+                "https://media.istockphoto.com/id/1130833057/photo/close-up-real-estate-agent-with-house-model-hand-putting-signing-contract-have-a-contract-in.jpg?b=1&s=612x612&w=0&k=20&c=xK6M2L0VmHO0DVpjUuRtHC1pJslGJ7n67kXxl1-frco="
+              }
+              title={property.name}
+            />
+            <CardContent style={contentStyle}>
+              <Typography gutterBottom variant="h5" component="h2">
+                {property.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {`${property.rooms} bedrooms • ${property.bathrooms} bathrooms`}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {`${property.houseNumber} ${property.street}`}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {`${property.suburb}, ${property.zipcode}`}
+              </Typography>
+              <Typography variant="h6" component="p">
+                {`${
+                  property.sellStatus === "SALE" ? "On sale for" : ""
+                } $${price} ${
+                  property.sellStatus === "RENT" ? "per month" : ""
+                }`}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Grid>
+      <Dialog
+        onClose={() => {
+          deactivateProperty();
+          dispatch(selectProperty({}));
+        }}
+        open={isActive}
+      >
+        <DialogTitle>{selectedProperty.name}</DialogTitle>
+        <DialogContent>
+          <Card>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {`${selectedProperty.houseNumber} ${selectedProperty.street}`}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {`${selectedProperty.suburb}, ${selectedProperty.zipcode}`}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6" component="p">
+                    {`${
+                      selectedProperty.sellStatus === "SALE"
+                        ? "On sale for"
+                        : ""
+                    } $${price} ${
+                      selectedProperty.sellStatus === "RENT" ? "per month" : ""
+                    }`}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    <BedIcon fontSize="small" />
+                    {`${selectedProperty.rooms} bedrooms`}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    <WcIcon fontSize="small" />
+                    {`${selectedProperty.bathrooms} bathrooms`}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              deactivateProperty();
+              dispatch(selectProperty({}));
+            }}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Fragment>
   );
 };
 
