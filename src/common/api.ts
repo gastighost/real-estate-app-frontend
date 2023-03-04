@@ -1,8 +1,39 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-axios.defaults.baseURL = process.env.BACKEND_URL;
+class Api {
+  private axiosInstance: AxiosInstance;
 
-class Api {}
+  constructor() {
+    this.axiosInstance = axios.create({
+      baseURL: process.env.BACKEND_URL,
+    });
+
+    this.axiosInstance.interceptors.request.use(
+      function (config) {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  async getProperties() {
+    try {
+      const response = await this.axiosInstance.get("/properties/");
+
+      return response;
+    } catch (error: any) {
+      throw error.response;
+    }
+  }
+}
 
 const api = new Api();
 
