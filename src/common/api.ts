@@ -65,6 +65,16 @@ class Api {
     }
   }
 
+  async getProfile() {
+    try {
+      const response = await this.axiosInstance.get("/users/profile/");
+
+      return response;
+    } catch (error: any) {
+      throw error.response;
+    }
+  }
+
   async getProperties() {
     try {
       const response = await this.axiosInstance.get("/properties/");
