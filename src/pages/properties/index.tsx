@@ -1,24 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import api from "@/common/api";
+import { AppDispatch, RootState } from "@/store/store";
 import PropertiesList from "../../components/properties/PropertiesList";
+import { getProperties } from "../../store/properties";
 
 const PropertiesPage = () => {
-  const [properties, setProperties] = useState<any>([]);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { properties } = useSelector((store: RootState) => store.properties);
 
   useEffect(() => {
-    const getProperties = async () => {
-      try {
-        const response = await api.getProperties();
-
-        setProperties(response.data.properties);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getProperties();
-  }, []);
+    dispatch(getProperties());
+  }, [dispatch]);
 
   return <PropertiesList properties={properties} />;
 };
