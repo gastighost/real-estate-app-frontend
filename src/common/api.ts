@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 class Api {
-  private axiosInstance: AxiosInstance;
+  private readonly axiosInstance: AxiosInstance;
 
   constructor() {
     this.axiosInstance = axios.create({
