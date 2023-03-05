@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@/store/store";
-import PropertiesList from "../../components/properties/PropertiesList";
 import { getProperties } from "../../store/properties";
+
+import PropertiesList from "../../components/properties/PropertiesList";
+import CreatePropertyForm from "@/components/properties/CreatePropertyForm";
 
 const PropertiesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,7 +16,12 @@ const PropertiesPage = () => {
     dispatch(getProperties());
   }, [dispatch]);
 
-  return <PropertiesList properties={properties} />;
+  return (
+    <Fragment>
+      <PropertiesList properties={properties} />
+      <CreatePropertyForm />
+    </Fragment>
+  );
 };
 
 export default PropertiesPage;

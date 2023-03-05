@@ -29,20 +29,8 @@ class Api {
         return response;
       },
       function (error) {
-        const originalRequest = error.config;
-
-        if (error.response.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-
-          const token = localStorage.getItem("token");
-
-          if (token) {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-
-            return axios(originalRequest);
-          } else {
-            Router.push("/login/");
-          }
+        if (error.response.status === 401) {
+          Router.push("/login/");
         }
 
         return Promise.reject(error);
