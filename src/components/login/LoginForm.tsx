@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import api from "@/common/api";
 
@@ -43,21 +43,6 @@ const LoginForm = () => {
         minHeight: "100vh",
       }}
     >
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        gutter={8}
-        containerClassName=""
-        containerStyle={{}}
-        toastOptions={{
-          className: "",
-          duration: 5000,
-          style: {
-            background: "#363636",
-            color: "#fff",
-          },
-        }}
-      />
       <Container maxWidth="xs">
         <Box
           sx={{

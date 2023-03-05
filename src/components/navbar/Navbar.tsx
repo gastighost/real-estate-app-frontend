@@ -18,7 +18,11 @@ const Navbar = () => {
         height: "64px",
         bgcolor: "white",
         px: 2,
+        py: 3,
         boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
       }}
     >
       <IconButton>

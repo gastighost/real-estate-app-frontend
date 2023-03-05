@@ -8,22 +8,70 @@ import {
   Paper,
   Typography,
   Dialog,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import { PropertyContext } from "@/context/create-property.ctx";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+
+import api from "@/common/api";
+import { getProperties } from "@/store/properties";
 
 const StyledFormControlLabel = styled(FormControlLabel)({
   marginTop: 20,
 });
 
 const CreatePropertyForm = () => {
-  const { control, handleSubmit } = useForm();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { control, handleSubmit, reset } = useForm();
 
   const { isCreating, creatingInactive } = useContext(PropertyContext);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      const {
+        name,
+        houseNumber,
+        street,
+        suburb,
+        zipcode,
+        sellStatus,
+        price,
+        rooms,
+        bathrooms,
+        parking,
+        floors,
+        sqm,
+      } = data;
+
+      const response = await api.createProperty({
+        name,
+        houseNumber: Number(houseNumber),
+        street,
+        suburb,
+        zipcode: Number(zipcode),
+        sellStatus,
+        price: Number(price),
+        rooms: Number(rooms),
+        bathrooms: Number(bathrooms),
+        parking,
+        floors: Number(floors),
+        sqm: Number(sqm),
+      });
+
+      toast.success(response.data.message);
+
+      reset();
+      creatingInactive();
+      dispatch(getProperties());
+    } catch (error: any) {
+      toast.error(error.data.error);
+    }
   };
 
   return (
@@ -39,7 +87,7 @@ const CreatePropertyForm = () => {
             flexDirection: "column",
             alignItems: "center",
           }}
-          onSubmit={() => handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -245,6 +293,33 @@ const CreatePropertyForm = () => {
                   />
                 }
                 label="Parking"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                name="sellStatus"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <RadioGroup
+                    {...field}
+                    aria-label="sellStatus"
+                    name="sellStatus"
+                    style={{ marginTop: 8, marginBottom: 8 }}
+                  >
+                    <FormControlLabel
+                      value="SALE"
+                      control={<Radio />}
+                      label="Sale"
+                    />
+                    <FormControlLabel
+                      value="RENT"
+                      control={<Radio />}
+                      label="Rent"
+                    />
+                  </RadioGroup>
+                )}
               />
             </Grid>
 

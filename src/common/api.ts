@@ -72,6 +72,30 @@ class Api {
       throw error.response;
     }
   }
+
+  async createProperty(formData: {
+    name: string;
+    houseNumber: number;
+    street: string;
+    suburb: string;
+    zipcode: number;
+    sellStatus: string;
+    price: number;
+    rooms: number;
+    bathrooms: number;
+    parking: string | boolean;
+    floors: number;
+    sqm: number;
+  }) {
+    try {
+      const response = await this.axiosInstance.post("/properties/", formData);
+
+      return response;
+    } catch (error: any) {
+      console.log(error);
+      throw error.response;
+    }
+  }
 }
 
 const api = new Api();
