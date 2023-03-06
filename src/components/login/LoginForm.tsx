@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -6,7 +7,15 @@ import toast from "react-hot-toast";
 
 import api from "@/common/api";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  activateSignup: () => void;
+}
+
+const LoginForm = (props: LoginFormProps) => {
+  const router = useRouter();
+
+  const { activateSignup } = props;
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -25,6 +34,8 @@ const LoginForm = () => {
       await api.login(username, password);
 
       toast.success("Successfully logged in!");
+
+      router.push("/properties/");
     } catch (error) {
       toast.error("Wrong credentials. Please try again.");
     } finally {
@@ -87,6 +98,15 @@ const LoginForm = () => {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={activateSignup}
+            >
+              Signup instead
             </Button>
           </Box>
         </Box>

@@ -38,6 +38,24 @@ class Api {
     );
   }
 
+  async signup(formData: {
+    username: string;
+    password: string;
+    email: string;
+    phone: string;
+  }) {
+    try {
+      const response = await this.axiosInstance.post(
+        "/users/signup/",
+        formData
+      );
+
+      return response;
+    } catch (error: any) {
+      throw error.response;
+    }
+  }
+
   async login(username: string, password: string) {
     try {
       const response = await this.axiosInstance.post("/users/login/", {
