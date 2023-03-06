@@ -48,7 +48,9 @@ const Navbar = () => {
           </Button>
         </Link>
         <IconButton>
-          <HouseIcon />
+          <Link href={"/"}>
+            <HouseIcon />
+          </Link>
         </IconButton>
       </Box>
     </Box>
