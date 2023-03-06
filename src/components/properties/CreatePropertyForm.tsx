@@ -10,6 +10,8 @@ import {
   Dialog,
   RadioGroup,
   Radio,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useContext } from "react";
@@ -42,11 +44,13 @@ const CreatePropertyForm = () => {
         zipcode,
         sellStatus,
         price,
+        currency,
         rooms,
         bathrooms,
         parking,
         floors,
         sqm,
+        type,
       } = data;
 
       const response = await api.createProperty({
@@ -57,11 +61,13 @@ const CreatePropertyForm = () => {
         zipcode: Number(zipcode),
         sellStatus,
         price: Number(price),
+        currency,
         rooms: Number(rooms),
         bathrooms: Number(bathrooms),
         parking,
         floors: Number(floors),
         sqm: Number(sqm),
+        type,
       });
 
       toast.success(response.data.message);
@@ -105,6 +111,32 @@ const CreatePropertyForm = () => {
                     required
                     style={{ marginTop: 8, marginBottom: 8 }}
                   />
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="type"
+                control={control}
+                defaultValue="HOUSE"
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    label="Property Type"
+                    fullWidth
+                    variant="outlined"
+                    style={{ marginTop: 8, marginBottom: 8 }}
+                  >
+                    {["HOUSE", "APARTMENT", "COMMERCIAL"].map(
+                      (propertyType) => (
+                        <MenuItem key={propertyType} value={propertyType}>
+                          {propertyType.charAt(0).toUpperCase() +
+                            propertyType.slice(1).toLowerCase()}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
                 )}
               />
             </Grid>
@@ -200,6 +232,29 @@ const CreatePropertyForm = () => {
                     required
                     style={{ marginTop: 8, marginBottom: 8 }}
                   />
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="currency"
+                control={control}
+                defaultValue="PHP"
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    label="Currency"
+                    fullWidth
+                    variant="outlined"
+                    style={{ marginTop: 8, marginBottom: 8 }}
+                  >
+                    {["PHP", "USD", "EUR"].map((currency) => (
+                      <MenuItem key={currency} value={currency}>
+                        {currency}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 )}
               />
             </Grid>

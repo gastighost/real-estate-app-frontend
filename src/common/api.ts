@@ -81,11 +81,13 @@ class Api {
     zipcode: number;
     sellStatus: string;
     price: number;
+    currency: string;
     rooms: number;
     bathrooms: number;
     parking: string | boolean;
     floors: number;
     sqm: number;
+    type: string;
   }) {
     try {
       const response = await this.axiosInstance.post("/properties/", formData);
