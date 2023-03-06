@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -17,8 +17,12 @@ import {
 import BedIcon from "@mui/icons-material/Bed";
 import WcIcon from "@mui/icons-material/Wc";
 
-import { selectProperty } from "@/store/properties";
-import { RootState } from "@/store/store";
+import { getProperties, selectProperty } from "@/store/properties";
+import { AppDispatch, RootState } from "@/store/store";
+import { toast } from "react-hot-toast";
+import api from "@/common/api";
+
+import styles from "./property-styles.module.css";
 
 interface PropertyProps {
   property: any;
@@ -33,7 +37,11 @@ const Property = ({
   deactivateProperty,
   activeProperty,
 }: PropertyProps) => {
-  const dispatch = useDispatch();
+  const [propertyForDeletion, setPropertyForDeletion] = useState<string | null>(
+    null
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const selectedProperty = useSelector(
     (store: RootState) => store.properties.property
@@ -58,6 +66,20 @@ const Property = ({
   const price = new Intl.NumberFormat().format(property.price);
 
   const isActive = property.id === activeProperty;
+
+  const deleteProperty = async (id: string) => {
+    try {
+      const response = await api.deleteProperty(id);
+      console.log(response);
+
+      setPropertyForDeletion(null);
+      dispatch(getProperties());
+
+      toast.success("Successfully deleted property!");
+    } catch (error) {
+      toast.error("Failed to delete property");
+    }
+  };
 
   return (
     <Fragment>
@@ -165,6 +187,15 @@ const Property = ({
         <DialogActions>
           <Button
             onClick={() => {
+              setPropertyForDeletion(selectedProperty.id);
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+        <DialogActions>
+          <Button
+            onClick={() => {
               deactivateProperty();
               dispatch(selectProperty({}));
             }}
@@ -172,6 +203,33 @@ const Property = ({
             Close
           </Button>
         </DialogActions>
+        <Dialog
+          open={!!propertyForDeletion}
+          onClose={() => setPropertyForDeletion(null)}
+          style={{ padding: "20px" }}
+        >
+          <div className={styles.deleteModal}>
+            <Typography>Are you sure you want to delete this</Typography>
+            <div className={styles.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  if (propertyForDeletion) deleteProperty(propertyForDeletion);
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setPropertyForDeletion(null)}
+              >
+                No
+              </Button>
+            </div>
+          </div>
+        </Dialog>
       </Dialog>
     </Fragment>
   );

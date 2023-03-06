@@ -98,6 +98,16 @@ class Api {
       throw error.response;
     }
   }
+
+  async deleteProperty(id: string) {
+    try {
+      const response = await this.axiosInstance.delete(`/properties/${id}`);
+
+      return response;
+    } catch (error: any) {
+      throw error.response;
+    }
+  }
 }
 
 const api = new Api();

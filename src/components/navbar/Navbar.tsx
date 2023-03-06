@@ -44,7 +44,7 @@ const Navbar = () => {
             color="secondary"
             sx={{ textTransform: "none", borderRadius: "2em" }}
           >
-            Sign up
+            Login
           </Button>
         </Link>
         <IconButton>
