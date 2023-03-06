@@ -1,13 +1,24 @@
 import React, { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import HouseIcon from "@mui/icons-material/House";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import { PropertyContext } from "@/context/create-property.ctx";
+import { RootState } from "@/store/store";
 
 const Navbar = () => {
+  const { loggedInUser } = useSelector((store: RootState) => store.users);
   const { creatingActive } = useContext(PropertyContext);
+  const router = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+
+    router.push("/login/");
+  };
 
   return (
     <Box
@@ -35,18 +46,32 @@ const Navbar = () => {
           variant="subtitle2"
           sx={{ mr: 2, color: "text.secondary" }}
           onClick={creatingActive}
+          style={{ cursor: "pointer" }}
         >
           Create a property
         </Typography>
-        <Link href={"/login/"}>
+        {!loggedInUser && (
+          <Link href={"/login/"}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ textTransform: "none", borderRadius: "2em" }}
+            >
+              Login
+            </Button>
+          </Link>
+        )}
+
+        {loggedInUser && (
           <Button
             variant="contained"
             color="secondary"
             sx={{ textTransform: "none", borderRadius: "2em" }}
+            onClick={logout}
           >
-            Login
+            Logout
           </Button>
-        </Link>
+        )}
         <IconButton>
           <Link href={"/"}>
             <HouseIcon />

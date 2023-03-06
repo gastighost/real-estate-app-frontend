@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import toast from "react-hot-toast";
 
 import api from "@/common/api";
+import { getLoggedInUser } from "@/store/users";
+import { AppDispatch } from "@/store/store";
 
 interface LoginFormProps {
   activateSignup: () => void;
 }
 
 const LoginForm = (props: LoginFormProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   const { activateSignup } = props;
@@ -32,6 +36,8 @@ const LoginForm = (props: LoginFormProps) => {
       event.preventDefault();
 
       await api.login(username, password);
+
+      dispatch(getLoggedInUser());
 
       toast.success("Successfully logged in!");
 
