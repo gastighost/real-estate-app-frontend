@@ -24,6 +24,7 @@ import api from "@/common/api";
 
 import styles from "./property-styles.module.css";
 import DeletePropertyModal from "./DeletePropertyModal";
+import EditPropertyForm from "./EditPropertyForm";
 
 interface PropertyProps {
   property: any;
@@ -41,6 +42,7 @@ const Property = ({
   const [propertyForDeletion, setPropertyForDeletion] = useState<string | null>(
     null
   );
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -67,6 +69,14 @@ const Property = ({
   const price = new Intl.NumberFormat().format(property.price);
 
   const isActive = property.id === activeProperty;
+
+  const activateEditing = () => {
+    setIsEditing(true);
+  };
+
+  const deactivateEditing = () => {
+    setIsEditing(false);
+  };
 
   const deleteProperty = async (id: string) => {
     try {
@@ -187,6 +197,15 @@ const Property = ({
         <DialogActions>
           <Button
             onClick={() => {
+              activateEditing();
+            }}
+          >
+            Edit
+          </Button>
+        </DialogActions>
+        <DialogActions>
+          <Button
+            onClick={() => {
               setPropertyForDeletion(selectedProperty.id);
             }}
           >
@@ -203,6 +222,10 @@ const Property = ({
             Close
           </Button>
         </DialogActions>
+        <EditPropertyForm
+          isEditing={isEditing}
+          deactivateEditing={deactivateEditing}
+        />
         <DeletePropertyModal
           propertyForDeletion={propertyForDeletion}
           setPropertyForDeletion={setPropertyForDeletion}

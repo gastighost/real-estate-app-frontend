@@ -117,6 +117,38 @@ class Api {
     }
   }
 
+  async editProperty(
+    id: string,
+    formData: {
+      name: string;
+      photoUrl: string;
+      houseNumber: number;
+      street: string;
+      suburb: string;
+      zipcode: number;
+      sellStatus: string;
+      price: number;
+      currency: string;
+      rooms: number;
+      bathrooms: number;
+      parking: boolean;
+      floors: number;
+      sqm: number;
+      type: string;
+    }
+  ) {
+    try {
+      const response = await this.axiosInstance.patch(
+        `/properties/${id}`,
+        formData
+      );
+
+      return response;
+    } catch (error: any) {
+      throw error.response;
+    }
+  }
+
   async deleteProperty(id: string) {
     try {
       const response = await this.axiosInstance.delete(`/properties/${id}`);
