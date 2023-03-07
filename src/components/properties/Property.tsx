@@ -23,6 +23,7 @@ import { toast } from "react-hot-toast";
 import api from "@/common/api";
 
 import styles from "./property-styles.module.css";
+import DeletePropertyModal from "./DeletePropertyModal";
 
 interface PropertyProps {
   property: any;
@@ -69,8 +70,7 @@ const Property = ({
 
   const deleteProperty = async (id: string) => {
     try {
-      const response = await api.deleteProperty(id);
-      console.log(response);
+      await api.deleteProperty(id);
 
       setPropertyForDeletion(null);
       dispatch(getProperties());
@@ -203,33 +203,11 @@ const Property = ({
             Close
           </Button>
         </DialogActions>
-        <Dialog
-          open={!!propertyForDeletion}
-          onClose={() => setPropertyForDeletion(null)}
-          style={{ padding: "20px" }}
-        >
-          <div className={styles.deleteModal}>
-            <Typography>Are you sure you want to delete this</Typography>
-            <div className={styles.buttonGroup}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  if (propertyForDeletion) deleteProperty(propertyForDeletion);
-                }}
-              >
-                Yes
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => setPropertyForDeletion(null)}
-              >
-                No
-              </Button>
-            </div>
-          </div>
-        </Dialog>
+        <DeletePropertyModal
+          propertyForDeletion={propertyForDeletion}
+          setPropertyForDeletion={setPropertyForDeletion}
+          deleteProperty={deleteProperty}
+        />
       </Dialog>
     </Fragment>
   );
