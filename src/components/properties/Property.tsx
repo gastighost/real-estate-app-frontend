@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -16,13 +17,14 @@ import {
 } from "@mui/material";
 import BedIcon from "@mui/icons-material/Bed";
 import WcIcon from "@mui/icons-material/Wc";
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
+import StraightenIcon from "@mui/icons-material/Straighten";
 
 import { getProperties, selectProperty } from "@/store/properties";
 import { AppDispatch, RootState } from "@/store/store";
 import { toast } from "react-hot-toast";
 import api from "@/common/api";
 
-import styles from "./property-styles.module.css";
 import DeletePropertyModal from "./DeletePropertyModal";
 import EditPropertyForm from "./EditPropertyForm";
 
@@ -54,7 +56,8 @@ const Property = ({
     boxShadow: "0 1px 2px rgb(0 0 0 / 20%)",
     borderRadius: "12px",
     overflow: "hidden",
-    maxWidth: "345px",
+    maxWidth: "300px",
+    minWidth: "300px",
     margin: "16px",
   };
 
@@ -177,51 +180,81 @@ const Property = ({
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    display="flex"
+                    alignContent="center"
+                    my={1}
                   >
-                    <BedIcon fontSize="small" />
+                    <BedIcon fontSize="small" sx={{ mr: 2 }} />
                     {`${selectedProperty.rooms} bedrooms`}
                   </Typography>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    display="flex"
+                    alignContent="center"
+                    my={1}
                   >
-                    <WcIcon fontSize="small" />
+                    <WcIcon fontSize="small" sx={{ mr: 2 }} />
                     {`${selectedProperty.bathrooms} bathrooms`}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    display="flex"
+                    alignContent="center"
+                    my={1}
+                  >
+                    <ChangeHistoryIcon fontSize="small" sx={{ mr: 2 }} />
+                    {`${selectedProperty.floors} floors`}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    display="flex"
+                    alignContent="center"
+                    my={1}
+                  >
+                    <StraightenIcon fontSize="small" sx={{ mr: 2 }} />
+                    {`${selectedProperty.sqm} sqm`}
                   </Typography>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              activateEditing();
-            }}
-          >
-            Edit
-          </Button>
-        </DialogActions>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setPropertyForDeletion(selectedProperty.id);
-            }}
-          >
-            Delete
-          </Button>
-        </DialogActions>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              deactivateProperty();
-              dispatch(selectProperty({}));
-            }}
-          >
-            Close
-          </Button>
-        </DialogActions>
+        <Box display="flex" justifyContent="space-around">
+          <DialogActions>
+            <Button
+              onClick={() => {
+                activateEditing();
+              }}
+            >
+              Edit
+            </Button>
+          </DialogActions>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setPropertyForDeletion(selectedProperty.id);
+              }}
+            >
+              Delete
+            </Button>
+          </DialogActions>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                deactivateProperty();
+                dispatch(selectProperty({}));
+              }}
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Box>
         <EditPropertyForm
           isEditing={isEditing}
           deactivateEditing={deactivateEditing}

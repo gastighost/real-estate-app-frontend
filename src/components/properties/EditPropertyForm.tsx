@@ -94,7 +94,7 @@ const EditPropertyForm = (props: EditPropertyFormProps) => {
     <Dialog open={isEditing} onClose={deactivateEditing}>
       <Paper style={{ padding: 16, margin: "auto", maxWidth: 500 }}>
         <Typography variant="h5" style={{ marginBottom: 16 }}>
-          Create a property
+          Edit your property
         </Typography>
 
         <form
@@ -403,7 +403,7 @@ const EditPropertyForm = (props: EditPropertyFormProps) => {
 
             <Grid item xs={12}>
               <Button variant="contained" color="primary" type="submit">
-                Create
+                Edit
               </Button>
             </Grid>
           </Grid>
