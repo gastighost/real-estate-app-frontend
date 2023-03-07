@@ -24,12 +24,18 @@ export const getLoggedInUser = createAsyncThunk(
 const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    removeLoggedInUser: (state) => {
+      state.loggedInUser = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getLoggedInUser.fulfilled, (state, action) => {
       state.loggedInUser = action.payload;
     });
   },
 });
+
+export const { removeLoggedInUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

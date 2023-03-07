@@ -8,30 +8,33 @@ import "@/styles/globals.css";
 
 import NavbarLayout from "../components/layouts/NavbarLayout";
 import PropertyCtxProvider from "@/context/create-property.ctx";
+import RouteGuard from "@/components/routeguard/RouteGuard";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <PropertyCtxProvider>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          gutter={8}
-          containerClassName=""
-          containerStyle={{}}
-          toastOptions={{
-            className: "",
-            duration: 5000,
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-          }}
-        />
-        <NavbarLayout>
-          <Component {...pageProps} />
-        </NavbarLayout>
-      </PropertyCtxProvider>
+      <RouteGuard>
+        <PropertyCtxProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+              className: "",
+              duration: 5000,
+              style: {
+                background: "#363636",
+                color: "#fff",
+              },
+            }}
+          />
+          <NavbarLayout>
+            <Component {...pageProps} />
+          </NavbarLayout>
+        </PropertyCtxProvider>
+      </RouteGuard>
     </Provider>
   );
 }

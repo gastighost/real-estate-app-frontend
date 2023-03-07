@@ -1,21 +1,25 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import HouseIcon from "@mui/icons-material/House";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import { PropertyContext } from "@/context/create-property.ctx";
-import { RootState } from "@/store/store";
+import { AppDispatch, RootState } from "@/store/store";
+import { removeLoggedInUser } from "@/store/users";
 
 const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { loggedInUser } = useSelector((store: RootState) => store.users);
   const { creatingActive } = useContext(PropertyContext);
   const router = useRouter();
 
   const logout = () => {
     localStorage.removeItem("token");
+
+    dispatch(removeLoggedInUser());
 
     router.push("/login/");
   };
