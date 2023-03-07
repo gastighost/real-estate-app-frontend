@@ -25,6 +25,11 @@ const propertiesSlice = createSlice({
   initialState,
   reducers: {
     selectProperty: (state, action) => {
+      const index = state.properties.findIndex(
+        (prop) => action.payload.id === prop.id
+      );
+
+      state.properties[index] = action.payload;
       state.property = action.payload;
     },
   },
