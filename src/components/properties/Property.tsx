@@ -86,7 +86,7 @@ const Property = ({
       await api.deleteProperty(id);
 
       setPropertyForDeletion(null);
-      dispatch(getProperties());
+      dispatch(getProperties({}));
 
       toast.success("Successfully deleted property!");
     } catch (error) {

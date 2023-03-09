@@ -74,7 +74,7 @@ const CreatePropertyForm = () => {
 
       reset();
       creatingInactive();
-      dispatch(getProperties());
+      dispatch(getProperties({}));
     } catch (error: any) {
       toast.error(error.data.error);
     }
