@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 
 import { Button, TextField, Box, Typography, Container } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -12,12 +12,22 @@ interface SignupFormProps {
 const SignupForm = (props: SignupFormProps) => {
   const { deactivateSignup } = props;
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
     email: "",
     phone: "",
   });
+
+  useEffect(() => {
+    if (confirmPassword && formValues.password !== confirmPassword) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+    }
+  }, [formValues.password, confirmPassword]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -31,13 +41,17 @@ const SignupForm = (props: SignupFormProps) => {
     event.preventDefault();
 
     try {
+      if (formValues.password !== confirmPassword) {
+        throw new Error("Passwords do not match!");
+      }
+
       await api.signup(formValues);
 
       toast.success("Successfully signed up!");
 
       deactivateSignup();
-    } catch (error) {
-      toast.error("Failed to signup");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to signup");
     }
   };
 
@@ -88,6 +102,23 @@ const SignupForm = (props: SignupFormProps) => {
               value={formValues.password}
               onChange={handleChange}
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="confirm-password"
+              label="Confirm Password"
+              type="password"
+              id="confirm-password"
+              autoComplete="confirm-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {error && (
+              <Typography color="red" display="flex" justifyContent="center">
+                {error}
+              </Typography>
+            )}
             <TextField
               margin="normal"
               required
