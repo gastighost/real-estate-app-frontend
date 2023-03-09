@@ -81,9 +81,45 @@ class Api {
     }
   }
 
-  async getProperties() {
+  async getProperties(queryData: {
+    type?: string;
+    price?: string;
+    rooms?: string;
+    bathrooms?: string;
+    sqm?: string;
+  }) {
     try {
-      const response = await this.axiosInstance.get("/properties/");
+      const queryObject: {
+        type?: string;
+        price?: string;
+        rooms?: string;
+        bathrooms?: string;
+        sqm?: string;
+      } = {};
+
+      if (queryData.type) {
+        queryObject.type = queryData.type;
+      }
+
+      if (queryData.price) {
+        queryObject.price = queryData.price;
+      }
+
+      if (queryData.rooms) {
+        queryObject.rooms = queryData.rooms;
+      }
+
+      if (queryData.bathrooms) {
+        queryObject.bathrooms = queryData.bathrooms;
+      }
+
+      if (queryData.sqm) {
+        queryObject.sqm = queryData.sqm;
+      }
+
+      const response = await this.axiosInstance.get("/properties/", {
+        params: queryObject,
+      });
 
       return response;
     } catch (error: any) {

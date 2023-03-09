@@ -13,8 +13,14 @@ const initialState: PropertiesState = {
 
 export const getProperties = createAsyncThunk(
   "properties/getProperties",
-  async () => {
-    const response = await api.getProperties();
+  async (queryData: {
+    type?: string;
+    price?: string;
+    rooms?: string;
+    bathrooms?: string;
+    sqm?: string;
+  }) => {
+    const response = await api.getProperties(queryData);
 
     return response.data.properties;
   }
