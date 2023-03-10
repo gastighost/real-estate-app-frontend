@@ -19,6 +19,8 @@ import BedIcon from "@mui/icons-material/Bed";
 import WcIcon from "@mui/icons-material/Wc";
 import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 import StraightenIcon from "@mui/icons-material/Straighten";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import LocalParkingIcon from "@mui/icons-material/LocalParking";
 
 import { getProperties, selectProperty } from "@/store/properties";
 import { AppDispatch, RootState } from "@/store/store";
@@ -150,6 +152,19 @@ const Property = ({
           <Card>
             <CardContent>
               <Grid container spacing={2}>
+                <Grid item xs={12} sm={10}>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    fontWeight="bold"
+                  >
+                    Property type:{" "}
+                    {selectedProperty.type &&
+                      selectedProperty.type?.charAt(0).toUpperCase() +
+                        selectedProperty.type?.slice(1).toLowerCase()}
+                  </Typography>
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography
                     variant="body2"
@@ -166,7 +181,7 @@ const Property = ({
                     {`${selectedProperty.suburb}, ${selectedProperty.zipcode}`}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={10}>
                   <Typography variant="h6" component="p">
                     {`${
                       selectedProperty.sellStatus === "SALE"
@@ -219,6 +234,32 @@ const Property = ({
                   >
                     <StraightenIcon fontSize="small" sx={{ mr: 2 }} />
                     {`${selectedProperty.sqm} sqm`}
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    display="flex"
+                    alignContent="center"
+                    my={1}
+                  >
+                    <AttachMoneyIcon fontSize="small" sx={{ mr: 2 }} />
+                    {`FOR ${selectedProperty.sellStatus}`}
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    display="flex"
+                    alignContent="center"
+                    my={1}
+                  >
+                    <LocalParkingIcon fontSize="small" sx={{ mr: 2 }} />
+                    {selectedProperty.parking
+                      ? "Parking Available"
+                      : "No Parking"}
                   </Typography>
                 </Grid>
               </Grid>
