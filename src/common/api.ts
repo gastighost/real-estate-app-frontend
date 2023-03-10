@@ -7,7 +7,6 @@ class Api {
   constructor() {
     this.axiosInstance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-      withCredentials: true,
     });
 
     this.axiosInstance.interceptors.request.use(
