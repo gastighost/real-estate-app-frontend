@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import { selectProperty } from "@/store/properties";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch } from "@/store/store";
 
 import PropertyDetails from "./PropertyDetails";
 
