@@ -32,17 +32,9 @@ import EditPropertyForm from "./EditPropertyForm";
 
 interface PropertyProps {
   property: any;
-  activateProperty: (propertyId: string) => void;
-  deactivateProperty: () => void;
-  activeProperty: string;
 }
 
-const Property = ({
-  property,
-  activateProperty,
-  deactivateProperty,
-  activeProperty,
-}: PropertyProps) => {
+const Property = ({ property }: PropertyProps) => {
   const [propertyForDeletion, setPropertyForDeletion] = useState<string | null>(
     null
   );
@@ -73,7 +65,7 @@ const Property = ({
 
   const price = new Intl.NumberFormat().format(property.price);
 
-  const isActive = property.id === activeProperty;
+  const isActive = property.id === selectedProperty.id;
 
   const activateEditing = () => {
     setIsEditing(true);
@@ -102,7 +94,6 @@ const Property = ({
         item
         key={property.id}
         onClick={() => {
-          activateProperty(property.id);
           dispatch(selectProperty(property));
         }}
       >
@@ -142,7 +133,6 @@ const Property = ({
       </Grid>
       <Dialog
         onClose={() => {
-          deactivateProperty();
           dispatch(selectProperty({}));
         }}
         open={isActive}
@@ -288,7 +278,6 @@ const Property = ({
           <DialogActions>
             <Button
               onClick={() => {
-                deactivateProperty();
                 dispatch(selectProperty({}));
               }}
             >
