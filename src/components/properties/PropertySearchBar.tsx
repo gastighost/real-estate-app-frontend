@@ -25,7 +25,7 @@ const PropertySearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [searchValues, setSearchValues] = useState<SearchValues>({
-    type: "",
+    type: "ANY",
     price: "",
     rooms: "",
     bathrooms: "",
@@ -59,18 +59,16 @@ const PropertySearchBar = () => {
       p={2}
       sx={{ backgroundColor: "white" }}
     >
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Property</InputLabel>
+      <FormControl className="flex text-center">
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={searchValues.type}
-          label="Property Type"
           name="type"
+          className="w-48 h-10"
           onChange={onChangeHandler}
-          sx={{ width: 120 }}
         >
-          <MenuItem value={""}>Any</MenuItem>
+          <MenuItem value={"ANY"}>Any</MenuItem>
           <MenuItem value={"HOUSE"}>House</MenuItem>
           <MenuItem value={"APARTMENT"}>Apartment</MenuItem>
           <MenuItem value={"COMMERCIAL"}>Commercial</MenuItem>
@@ -79,23 +77,20 @@ const PropertySearchBar = () => {
 
       <TextField
         id="search-bar"
-        className="text"
+        className="w-48 h-10"
         label="Min price"
-        variant="outlined"
         placeholder="Search..."
         type="number"
         name="price"
         onChange={onChangeHandler}
         value={searchValues.price}
         size="small"
-        sx={{ maxWidth: 170 }}
       />
 
       <TextField
         id="search-bar"
-        className="text"
+        className="w-48 h-10"
         label="Number of rooms"
-        variant="outlined"
         placeholder="Search..."
         type="number"
         name="rooms"
@@ -107,9 +102,8 @@ const PropertySearchBar = () => {
 
       <TextField
         id="search-bar"
-        className="text"
+        className="w-48 h-10"
         label="Number of bathrooms"
-        variant="outlined"
         placeholder="Search..."
         type="number"
         name="bathrooms"
@@ -121,9 +115,8 @@ const PropertySearchBar = () => {
 
       <TextField
         id="search-bar"
-        className="text"
+        className="w-48 h-10"
         label="Minimum square meters"
-        variant="outlined"
         placeholder="Search..."
         type="number"
         name="sqm"

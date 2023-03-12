@@ -97,7 +97,7 @@ class Api {
         sqm?: string;
       } = {};
 
-      if (queryData.type) {
+      if (queryData.type && queryData.type !== "ANY") {
         queryObject.type = queryData.type;
       }
 
