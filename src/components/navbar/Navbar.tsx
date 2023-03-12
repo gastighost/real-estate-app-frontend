@@ -46,14 +46,16 @@ const Navbar = () => {
         </Link>
       </IconButton>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography
-          variant="subtitle2"
-          sx={{ mr: 2, color: "text.secondary" }}
-          onClick={creatingActive}
-          style={{ cursor: "pointer" }}
-        >
-          Create a property
-        </Typography>
+        {router.pathname === "/properties" && (
+          <Typography
+            variant="subtitle2"
+            sx={{ mr: 2, color: "text.secondary" }}
+            onClick={creatingActive}
+            style={{ cursor: "pointer" }}
+          >
+            Create a property
+          </Typography>
+        )}
         {!loggedInUser && (
           <Link href={"/login/"}>
             <Button
@@ -69,7 +71,7 @@ const Navbar = () => {
         {loggedInUser && (
           <Button
             variant="contained"
-            color="secondary"
+            className="rounded-full text-white bg-cyan-600"
             sx={{ textTransform: "none", borderRadius: "2em" }}
             onClick={logout}
           >

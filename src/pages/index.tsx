@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+
 import {
   Box,
   Button,
@@ -8,12 +10,11 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
 
 const Home = () => {
   return (
     <Box>
-      <Box bgcolor="primary.main" color="primary.contrastText" py={10}>
+      <Box className="bg-blue-500 text-white" py={10}>
         <Box maxWidth={800} mx="auto" textAlign="center">
           <Typography variant="h2" gutterBottom>
             Buy your dream home now
@@ -23,7 +24,11 @@ const Home = () => {
           </Typography>
           <Box mt={4}>
             <Link href={"/properties/"}>
-              <Button variant="contained" color="secondary" size="large">
+              <Button
+                variant="contained"
+                className="bg-sky-500 hover:bg-sky-700"
+                size="large"
+              >
                 Get started
               </Button>
             </Link>
@@ -31,9 +36,9 @@ const Home = () => {
         </Box>
       </Box>
       <Box my={10}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} m={4}>
-            <Card>
+        <Grid container className="flex justify-around">
+          <Grid>
+            <Card className="w-full rounded-lg">
               <CardMedia
                 component="img"
                 image="https://picsum.photos/id/1018/500/300"
@@ -49,8 +54,8 @@ const Home = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} m={4}>
-            <Card>
+          <div>
+            <Card className="w-full rounded-lg">
               <CardMedia
                 component="img"
                 image="https://picsum.photos/id/1024/500/300"
@@ -65,7 +70,7 @@ const Home = () => {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </div>
         </Grid>
       </Box>
       <Box
