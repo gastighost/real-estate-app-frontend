@@ -69,7 +69,9 @@ const PropertyDetails = ({ property }: PropertyProps) => {
       }}
       open={isActive}
     >
-      <DialogTitle>{selectedProperty.name}</DialogTitle>
+      <DialogTitle className="font-sans subpixel-antialiased text-xl">
+        {selectedProperty.name}
+      </DialogTitle>
       <DialogContent>
         <Card>
           <CardContent>

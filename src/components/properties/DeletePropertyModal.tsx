@@ -21,8 +21,7 @@ const DeletePropertyModal = (props: DeletePropertyModalProps) => {
         <Typography>Are you sure you want to delete this</Typography>
         <div className={styles.buttonGroup}>
           <Button
-            variant="contained"
-            color="primary"
+            className="rounded-full text-white bg-cyan-600  hover:bg-cyan-500"
             onClick={() => {
               if (propertyForDeletion) deleteProperty(propertyForDeletion);
             }}
@@ -30,8 +29,7 @@ const DeletePropertyModal = (props: DeletePropertyModalProps) => {
             Yes
           </Button>
           <Button
-            variant="outlined"
-            color="primary"
+            className="rounded-full text-white bg-red-600 hover:bg-red-500"
             onClick={() => setPropertyForDeletion(null)}
           >
             No

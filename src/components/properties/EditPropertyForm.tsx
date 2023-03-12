@@ -402,7 +402,10 @@ const EditPropertyForm = (props: EditPropertyFormProps) => {
             </Grid>
 
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" type="submit">
+              <Button
+                type="submit"
+                className="rounded-full text-white bg-cyan-600  hover:bg-cyan-500"
+              >
                 Edit
               </Button>
             </Grid>

@@ -59,8 +59,7 @@ const Navbar = () => {
         {!loggedInUser && (
           <Link href={"/login/"}>
             <Button
-              variant="contained"
-              color="secondary"
+              className="rounded-full text-white bg-cyan-600 hover:bg-cyan-500"
               sx={{ textTransform: "none", borderRadius: "2em" }}
             >
               Login
@@ -70,8 +69,7 @@ const Navbar = () => {
 
         {loggedInUser && (
           <Button
-            variant="contained"
-            className="rounded-full text-white bg-cyan-600"
+            className="rounded-full text-white bg-red-600 hover:bg-red-500"
             sx={{ textTransform: "none", borderRadius: "2em" }}
             onClick={logout}
           >
