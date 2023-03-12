@@ -75,7 +75,7 @@ const SignupForm = (props: SignupFormProps) => {
           }}
         >
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -144,7 +144,7 @@ const SignupForm = (props: SignupFormProps) => {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
+              className="text-white bg-sky-600 hover:bg-sky-500"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
@@ -152,7 +152,7 @@ const SignupForm = (props: SignupFormProps) => {
 
             <Button
               fullWidth
-              variant="contained"
+              className="text-white bg-sky-600 hover:bg-sky-500"
               sx={{ mt: 3, mb: 2 }}
               onClick={deactivateSignup}
             >

@@ -100,7 +100,7 @@ const LoginForm = (props: LoginFormProps) => {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
+              className="text-white bg-sky-600 hover:bg-sky-500"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
@@ -108,7 +108,7 @@ const LoginForm = (props: LoginFormProps) => {
 
             <Button
               fullWidth
-              variant="contained"
+              className="text-white bg-sky-600 hover:bg-sky-500"
               sx={{ mt: 3, mb: 2 }}
               onClick={activateSignup}
             >
